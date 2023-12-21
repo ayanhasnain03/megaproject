@@ -1,5 +1,6 @@
 const app = require("./app");
 const dotenv = require("dotenv");
+const connectDatabase = require("./config/conn");
 const port = process.env.PORT || 8080;
 
 // Handling Uncaught Exception
@@ -8,8 +9,11 @@ process.on("uncaughtException", (err) => {
   console.log(`Shutting down the server due to Handling Uncaught Exception `);
   process.exit(1);
 });
-//config
-dotenv.config({ path: "config/config.env" });
+// config
+dotenv.config({path:"config/config.env"});
+
+//Conecting to Database
+connectDatabase();
 
 app.get("/", (req, res) => {
   res.send("hello");
