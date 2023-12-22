@@ -2,9 +2,9 @@ const express = require("express")
 const errorMiddleware = require("./middlewares/error");
 const cookieParser = require("cookie-parser");
 const app = express();
-
-app.use(express.json())
 app.use(cookieParser())
+app.use(express.json())
+
 // Route Imports
 const product = require("./routes/productRoute");
 const user = require("./routes/userRoute")
