@@ -25,4 +25,5 @@ Router.route("/admin/user/:id")
     .put(isAuthenticatedUser, authorizedRoles("admin"), updateUserRole)
     .delete(isAuthenticatedUser, authorizedRoles("admin"), deleteUser);
 
+
 module.exports = Router;

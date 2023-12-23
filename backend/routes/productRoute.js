@@ -5,6 +5,9 @@ const {
   getProductDetails,
   updateProduct,
   deleteProduct,
+  createProductReview,
+  deleteReview,
+  getProductReviews,
 } = require("../controllers/productController");
 const { isAuthenticatedUser, authorizedRoles } = require("../middlewares/auth");
 // i get invaild jsonwebtoken error when testing api because i dont remove
@@ -22,4 +25,10 @@ Router.route("/admin/product/:id")
   .get(getProductDetails)
   .put(isAuthenticatedUser, authorizedRoles("admin"), updateProduct)
   .delete(isAuthenticatedUser, authorizedRoles("admin"), deleteProduct);
+
+      
+Router.route("/review").put(isAuthenticatedUser, createProductReview);
+
+Router.route("/reviews").get(getProductReviews).delete(isAuthenticatedUser, deleteReview);
+
 module.exports = Router;
