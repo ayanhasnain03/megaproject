@@ -10,5 +10,17 @@
     "mongoose": "^8.0.3",
     "nodemailer": "^6.9.7",
     "validator": "^13.11.0"
-  }
+  },
+  "name": "eccomere",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "nodemon backend/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }

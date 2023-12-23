@@ -11,13 +11,14 @@ const { isAuthenticatedUser, authorizedRoles } = require("../middlewares/auth");
 //JWT from header
 const Router = express.Router();
 //create Product Route
-Router.route("/product/new").post(createProduct);
+Router.route("/admin/product/new")
+    .post(isAuthenticatedUser, authorizedRoles("admin"), createProduct);
 
 //get Product Route
 Router.route("/products").get(getAllProducts);
 
 // get productById route
-Router.route("/product/:id")
+Router.route("/admin/product/:id")
   .get(getProductDetails)
   .put(isAuthenticatedUser, authorizedRoles("admin"), updateProduct)
   .delete(isAuthenticatedUser, authorizedRoles("admin"), deleteProduct);

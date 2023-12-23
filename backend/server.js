@@ -1,5 +1,5 @@
 const app = require("./app");
-const dotenv = require("dotenv");
+const dotenv = require("dotenv").config({path:"backend/config.env"})
 const connectDatabase = require("./config/conn");
 const port = process.env.PORT || 8080;
 
@@ -9,9 +9,6 @@ process.on("uncaughtException", (err) => {
   console.log(`Shutting down the server due to Handling Uncaught Exception `);
   process.exit(1);
 });
-// config
-dotenv.config({path:"config/config.env"});
-
 //Conecting to Database
 connectDatabase();
 

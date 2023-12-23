@@ -1,6 +1,6 @@
 const express = require("express");
 const { isAuthenticatedUser, authorizedRoles } = require("../middlewares/auth");
-const { registerUser, loginUser, logoutUser, forgotPassword, resetPassword, getUserDetails, updatePassword, updateProfile } = require("../controllers/userController");
+const { registerUser, loginUser, logoutUser, forgotPassword, resetPassword, getUserDetails, updatePassword, updateProfile, getAllUsers, getSingleUser, updateUserRole, deleteUser } = require("../controllers/userController");
 const Router = express.Router();
 //register
 Router.route("/register").post(registerUser);
@@ -18,4 +18,11 @@ Router.route("/me").get(isAuthenticatedUser, getUserDetails);
 Router.route("/password/update").put(isAuthenticatedUser, updatePassword);
 // update user forfile
 Router.route("/me/update").put(isAuthenticatedUser, updateProfile);
+
+Router.route("/admin/users").get(isAuthenticatedUser, authorizedRoles("admin"), getAllUsers);
+Router.route("/admin/user/:id")
+    .get(isAuthenticatedUser, authorizedRoles("admin"), getSingleUser)
+    .put(isAuthenticatedUser, authorizedRoles("admin"), updateUserRole)
+    .delete(isAuthenticatedUser, authorizedRoles("admin"), deleteUser);
+
 module.exports = Router;
