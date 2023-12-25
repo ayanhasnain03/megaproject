@@ -22,10 +22,9 @@ Router.route("/products").get(getAllProducts);
 
 // get productById route
 Router.route("/admin/product/:id")
-  .get(getProductDetails)
   .put(isAuthenticatedUser, authorizedRoles("admin"), updateProduct)
   .delete(isAuthenticatedUser, authorizedRoles("admin"), deleteProduct);
-
+Router.route("/product/:id").get(getProductDetails)
       
 Router.route("/review").put(isAuthenticatedUser, createProductReview);
 

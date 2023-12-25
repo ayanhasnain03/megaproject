@@ -11,11 +11,6 @@ process.on("uncaughtException", (err) => {
 });
 //Conecting to Database
 connectDatabase();
-
-app.get("/", (req, res) => {
-  res.send("hello");
-});
-
 const server = app.listen(port, () => {
   console.log(`server run on ${process.env.port}`);
 });
