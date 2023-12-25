@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Carousel from "react-material-ui-carousel";
-import { getProductDetails,clearErrors} from '../../action/productAction'
+import { getProductDetails,clearErrors} from '../../action/productAction.js'
 import { useParams } from 'react-router-dom';
 import ReactStars from "react-rating-stars-component";
 import MetaData from "../layout/MetaData.js";

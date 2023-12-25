@@ -9,7 +9,7 @@ import {
 } from "../constants/productConstant";
 import axios from "axios";
 export const getProduct =
-  (keyword = "", currentPage = 1, price = [0, 25000], category = "") =>
+  (keyword = "", currentPage = 1, price = [0, 25000], category = "",ratings = 0) =>
   async (dispatch) => {
     try {
       dispatch({

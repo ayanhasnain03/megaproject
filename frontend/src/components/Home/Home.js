@@ -41,12 +41,6 @@ const Home = () => {
             <div className='banner'>
                <p>Welcom to Ecommerce</p>
                 <h1>FIND AMAZING PRODUCTS BELOW</h1>
-   
-                <a href='#container'>
-                    <button>
-                        Scroll <CgMouse/>
-                    </button>
-                </a>
             </div>
    
             <h2 className='homeHeading'>Featured Products</h2>
