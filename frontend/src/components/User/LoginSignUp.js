@@ -5,15 +5,17 @@ import { Link } from "react-router-dom";
 import MailOutlineIcon from "@material-ui/icons/MailOutline";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
 import FaceIcon from "@material-ui/icons/Face";
+import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, login, register } from "../../action/userAction.js";
 import { useAlert } from "react-alert";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const LoginSignUp = () => {
   const dispatch = useDispatch();
   const alert = useAlert();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const { error, loading, isAuthenticated } = useSelector(
     (state) => state.user
@@ -29,8 +31,10 @@ const LoginSignUp = () => {
     name: "",
     email: "",
     password: "",
+    phone_no: "",
+    role: "user",
   });
-  const { name, email, password } = user;
+  const { name, email, password, phone_no, role } = user;
   const [avatar, setAvatar] = useState();
   const [avatarPreview, setAvatarPreview] = useState("/Profile.png");
 
@@ -45,7 +49,9 @@ const LoginSignUp = () => {
     myForm.set("name", name);
     myForm.set("email", email);
     myForm.set("password", password);
+    myForm.set("role", role);
     myForm.set("avatar", avatar);
+    myForm.set("phone_no", phone_no);
 
     dispatch(register(myForm));
   };
@@ -62,19 +68,23 @@ const LoginSignUp = () => {
       };
       reader.readAsDataURL(e.target.files[0]);
     } else {
+      if (e.target.name === "role") {
+        e.target.value = e.target.checked ? "admin" : "user";
+      }
       setUser({ ...user, [e.target.name]: e.target.value });
     }
   };
 
+  const redirect = location.search ? location.search.split("=")[1] : "account";
   useEffect(() => {
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
     }
     if (isAuthenticated) {
-      navigate("/account");
+      navigate(`/${redirect}`);
     }
-  }, [dispatch, error, alert, isAuthenticated, navigate]);
+  }, [dispatch, error, alert, isAuthenticated, navigate, redirect]);
 
   const switchTabs = (e, tab) => {
     if (tab === "login") {
@@ -126,7 +136,7 @@ const LoginSignUp = () => {
                   onChange={(e) => setLoginPassword(e.target.value)}
                 />
               </div>
-              <Link to="/password/forget">Forget Password ?</Link>
+              <Link to="/password/forgot">Forget Password ?</Link>
               <input type="submit" value="Login" className="loginBtn" />
             </form>
             <form
@@ -135,6 +145,15 @@ const LoginSignUp = () => {
               encType="multipart/form-data"
               onSubmit={registerSubmit}
             >
+              <div className="isBuyer">
+                <pre>Are you Seller?</pre>
+                <input
+                  type="checkbox"
+                  id="role"
+                  name="role"
+                  onChange={registerDataChange}
+                />
+              </div>
               <div className="signUpName">
                 <FaceIcon />
                 <input
@@ -143,6 +162,17 @@ const LoginSignUp = () => {
                   required
                   name="name"
                   value={name}
+                  onChange={registerDataChange}
+                />
+              </div>
+              <div className="signUpPhoneNumber">
+                <LocalPhoneIcon />
+                <input
+                  type="tel"
+                  placeholder="Phone No"
+                  required
+                  name="phone_no"
+                  value={phone_no}
                   onChange={registerDataChange}
                 />
               </div>
