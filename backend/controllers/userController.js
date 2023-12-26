@@ -7,20 +7,20 @@ const crypto = require("crypto");
 const cloudinary = require("cloudinary");
 // Register a User
 exports.registerUser = catchAsyncErrors( async(req, res, next) =>{
-  const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+  const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar,{
     folder: "avatars",
-    width: 150,
-    crop: "scale",
-  });
+    width:150,
+    crop:"scale",
+  })
   const {name, email, password} = req.body;
-    const user =await User.create({
-        name, email, password, 
-        avatar:{
+  const user = await User.create({
+      name, email, password, 
+      avatar:{
           public_id: myCloud.public_id,
           url: myCloud.secure_url,
-        },
-    });
-    sendToken(user, 201, res);
+      },
+  });
+  sendToken(user, 201, res);
 });
 
 //Login User
@@ -173,13 +173,29 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
         email: req.body.email
     }
     //We will add cloudinary later
-    console.log(newUserData);
+    if (req.body.avatar !== "") {
+      const user = await User.findById(req.user.id);
+  
+      const imageId = user.avatar.public_id;
+  
+      await cloudinary.v2.uploader.destroy(imageId);
+  
+      const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+        folder: "avatars",
+        width: 150,
+        crop: "scale",
+      });
+  
+      newUserData.avatar = {
+        public_id: myCloud.public_id,
+        url: myCloud.secure_url,
+      };
+    }
     const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
         new: true,
         runValidators: true,
         useFindAndModify: false,
     });
-    console.log(user);
     res.status(200).json({
         success: true,
     });
@@ -224,7 +240,6 @@ exports.updateUserRole = catchAsyncErrors(async (req, res, next) => {
       runValidators: true,
       useFindAndModify: false,
   });
-  console.log(user);
   res.status(200).json({
       success: true,
   });
