@@ -1,6 +1,6 @@
 const app = require("./app");
 const dotenv = require("dotenv").config({path:"backend/config.env"})
-const cloudinary = require("cloudinary").v2;
+const cloudinary = require("cloudinary");
 const connectDatabase = require("./config/conn");
 const port = process.env.PORT || 8080;
 // Handling Uncaught Exception
