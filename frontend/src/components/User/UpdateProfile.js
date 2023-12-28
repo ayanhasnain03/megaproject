@@ -12,7 +12,7 @@ import {
 import { useAlert } from "react-alert";
 import { useNavigate } from "react-router-dom";
 import { UPDATE_PROFILE_RESET } from "../../constants/userConstant.js";
-import MetaData from "../layout/MetaData";
+import MetaData from "../layout/MetaData.js";
 
 const UpdateProfile = () => {
   const dispatch = useDispatch();
