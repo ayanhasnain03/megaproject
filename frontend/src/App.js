@@ -46,7 +46,7 @@ const App = () => {
         <Route path='/me/update' element={<UpdateProfile/>}/>
         <Route  path="/password/update" element={<UpdatePassword/>} />
         </Route>
-        
+        <Route  path="/password/forgot" element={<ForgotPassword/>} />
       </Routes>
       <Footer />
   </Router>
